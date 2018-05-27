@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Software to model and measure processing elements in a factory system",
   "bin": "./bin/cli.js",
-  "dependencies": {},
+  "dependencies": {
+    "@dagrejs/graphlib": "^2.1.4"
+  },
   "devDependencies": {
     "standard": "^11.0.1",
     "tap": "^12.0.1",
