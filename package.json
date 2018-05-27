@@ -1,0 +1,23 @@
+{
+  "name": "factory-fun",
+  "version": "1.0.0",
+  "description": "Software to model and measure processing elements in a factory system",
+  "bin": "./bin/cli.js",
+  "dependencies": {},
+  "devDependencies": {
+    "standard": "^11.0.1",
+    "tap": "^12.0.1",
+    "tape": "^4.9.0"
+  },
+  "scripts": {
+    "test": "standard && ./node_modules/.bin/tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanramage/factory-fun.git"
+  },
+  "bugs": {
+    "url": "http://github.com/ryanramage/factory-fun/issues"
+  },
+  "homepage": "http://github.com/ryanramage/factory-fun"
+}
