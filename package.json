@@ -1,6 +1,6 @@
 {
   "name": "factory-fun",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Software to model and measure processing elements in a factory system",
   "bin": "./bin/cli.js",
   "dependencies": {
