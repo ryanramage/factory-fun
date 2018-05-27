@@ -11,11 +11,12 @@ General idea of this project:
 processing step
   - have inventory coming in and out
   - inventory can be filtered to be a certain type
+  - multi input inventory?
   - inventory that is not currently processing is in the processing queue
 
   processing queue
    - inventory waiting to go into the processing step
-   - way to choose next item(s) FIFO, LIFO, etc
+   - way to choose next item(s) FIFO, LIFO, etc, value estimate.
    - measure time into q and exit q per inventory item
 
   - inventory is assigned to a processing unit
@@ -23,7 +24,9 @@ processing step
   - more than one processing unit makes it a parallel step.
 
   processing units
+   - a unit type? 
    - min/max number of inventory the unit can allow at once
+   - provide or calculate an ETA
    - apply effort on inventory. effort has a cost and progresses inventory as a percentage.
    - bi-products (usually waste) can be measured for each applied effort and thus can also be rate measured
    - mistakes/failures in processing come out as defects

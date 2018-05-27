@@ -4,7 +4,9 @@
   "description": "Software to model and measure processing elements in a factory system",
   "bin": "./bin/cli.js",
   "dependencies": {
-    "@dagrejs/graphlib": "^2.1.4"
+    "@dagrejs/graphlib": "^2.1.4",
+    "joi": "^13.3.0",
+    "mathjs": "^4.3.0"
   },
   "devDependencies": {
     "standard": "^11.0.1",
