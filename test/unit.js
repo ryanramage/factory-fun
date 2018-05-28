@@ -1,52 +1,7 @@
 var factory = require('../lib/index')
 var test = require('tape')
 
-test('throw exception if invalid data', function (t) {
-  let brokerage = factory.init()
-  try {
-    brokerage.addProcessingStep({ label: 'qualify' })
-    t.fail()
-  } catch (e) {
-    t.ok(e)
-    t.end()
-  }
-})
-
-test('test recipe duplicated items throws exception', function (t) {
-  let brokerage = factory.init()
-  let qualify = {
-    label: 'qualify',
-    recipe: [{ amount: 1, product: 'buyer' }, { amount: 1, product: 'buyer' }],
-    recipeProducts: [{ amount: 1, product: 'buyer.qualified' }],
-    effortEstimate: [{ amount: 30, unit: 'minutes' }]
-  }
-  try {
-    brokerage.addProcessingStep(qualify)
-    t.fail()
-  } catch (e) {
-    t.ok(e)
-    t.end()
-  }
-})
-
-test('test recipeProducts duplicated items throws exception', function (t) {
-  let team = factory.init()
-  let qualify = {
-    label: 'qualify',
-    recipe: [{ amount: 1, product: 'buyer' }],
-    recipeProducts: [{ amount: 1, product: 'buyer.qualified' }, { amount: 1, product: 'buyer.qualified' }],
-    effortEstimate: [{ amount: 30, unit: 'minutes' }]
-  }
-  try {
-    team.addProcessingStep(qualify)
-    t.fail()
-  } catch (e) {
-    t.ok(e)
-    t.end()
-  }
-})
-
-test('create a factory', function (t) {
+test('create a realestate factory', function (t) {
   let team = factory.init()
   let qualify = {
     label: 'qualify',
@@ -107,4 +62,49 @@ test('create a factory', function (t) {
   let asObject = team.serialize()
   console.log(JSON.stringify(asObject))
   t.end()
+})
+
+test('throw exception if invalid data', function (t) {
+  let brokerage = factory.init()
+  try {
+    brokerage.addProcessingStep({ label: 'qualify' })
+    t.fail()
+  } catch (e) {
+    t.ok(e)
+    t.end()
+  }
+})
+
+test('test recipe duplicated items throws exception', function (t) {
+  let brokerage = factory.init()
+  let qualify = {
+    label: 'qualify',
+    recipe: [{ amount: 1, product: 'buyer' }, { amount: 1, product: 'buyer' }],
+    recipeProducts: [{ amount: 1, product: 'buyer.qualified' }],
+    effortEstimate: [{ amount: 30, unit: 'minutes' }]
+  }
+  try {
+    brokerage.addProcessingStep(qualify)
+    t.fail()
+  } catch (e) {
+    t.ok(e)
+    t.end()
+  }
+})
+
+test('test recipeProducts duplicated items throws exception', function (t) {
+  let team = factory.init()
+  let qualify = {
+    label: 'qualify',
+    recipe: [{ amount: 1, product: 'buyer' }],
+    recipeProducts: [{ amount: 1, product: 'buyer.qualified' }, { amount: 1, product: 'buyer.qualified' }],
+    effortEstimate: [{ amount: 30, unit: 'minutes' }]
+  }
+  try {
+    team.addProcessingStep(qualify)
+    t.fail()
+  } catch (e) {
+    t.ok(e)
+    t.end()
+  }
 })
