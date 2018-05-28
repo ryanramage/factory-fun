@@ -59,7 +59,7 @@ test('create a factory', function (t) {
     recipe: [{ amount: 1, product: 'buyer.qualified' }],
     recipeProducts: [{ amount: 1, product: 'showingTour' }],
     effortEstimate: [
-      { amount: 3, unit: 'listings', notes: 'this is the number of listings favs accumlated before we should setup' },
+      { amount: 3, unit: 'listings', notes: 'this is the number of listings favs accumlated before considering setup' },
       { amount: 20, unit: 'minutes', notes: 'this is the time to setup the showing' }]
   }
   let showing = {
@@ -71,6 +71,14 @@ test('create a factory', function (t) {
       { amount: 50, unit: 'kilometers', notes: 'average driving' }
     ]
   }
+  let offer = {
+    label: 'offer',
+    recipe: [{amount: 1, product: 'completedShowing'}],
+    recipeProducts: [{ amount: 1, product: 'acceptedOffer' }],
+    effortEstimate: [
+      { amount: 3, unit: 'hours', notes: 'to negotiate and get signatures' }
+    ]
+  }
 
   brokerage
     .addProcessingStep(qualify)
@@ -78,6 +86,16 @@ test('create a factory', function (t) {
     .connectSteps('qualify', 'accumulateListings', [['buyer.qualified', 'buyer.qualified']])
     .addProcessingStep(showing)
     .connectSteps('accumulateListings', 'showing', [['showingTour', 'showingTour']])
+    .addProcessingStep(offer)
+    .connectSteps('showing', 'offer', [['completedShowing', 'completedShowing']])
+
+  let realtor1 = {
+    label: 'e12345'
+  }
+  brokerage.addProccessingInstance('qualify', realtor1)
+  brokerage.addProccessingInstance('accumulateListings', realtor1)
+  brokerage.addProccessingInstance('showing', realtor1)
+  brokerage.addProccessingInstance('offer', realtor1)
 
   let asObject = brokerage.serialize()
   console.log(JSON.stringify(asObject))

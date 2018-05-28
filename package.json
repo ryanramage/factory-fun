@@ -6,6 +6,7 @@
   "dependencies": {
     "@dagrejs/graphlib": "^2.1.4",
     "joi": "^13.3.0",
+    "lodash": "^4.17.10",
     "mathjs": "^4.3.0"
   },
   "devDependencies": {
