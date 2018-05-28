@@ -30,7 +30,7 @@ test('test recipe duplicated items throws exception', function (t) {
 })
 
 test('test recipeProducts duplicated items throws exception', function (t) {
-  let brokerage = factory.init()
+  let team = factory.init()
   let qualify = {
     label: 'qualify',
     recipe: [{ amount: 1, product: 'buyer' }],
@@ -38,7 +38,7 @@ test('test recipeProducts duplicated items throws exception', function (t) {
     effortEstimate: [{ amount: 30, unit: 'minutes' }]
   }
   try {
-    brokerage.addProcessingStep(qualify)
+    team.addProcessingStep(qualify)
     t.fail()
   } catch (e) {
     t.ok(e)
@@ -47,7 +47,7 @@ test('test recipeProducts duplicated items throws exception', function (t) {
 })
 
 test('create a factory', function (t) {
-  let brokerage = factory.init()
+  let team = factory.init()
   let qualify = {
     label: 'qualify',
     recipe: [{ amount: 1, product: 'buyer' }],
@@ -80,7 +80,7 @@ test('create a factory', function (t) {
     ]
   }
 
-  brokerage
+  team
     .addProcessingStep(qualify)
     .addProcessingStep(accumulateListings)
     .connectSteps('qualify', 'accumulateListings', [['buyer.qualified', 'buyer.qualified']])
@@ -92,12 +92,19 @@ test('create a factory', function (t) {
   let realtor1 = {
     label: 'e12345'
   }
-  brokerage.addProccessingInstance('qualify', realtor1)
-  brokerage.addProccessingInstance('accumulateListings', realtor1)
-  brokerage.addProccessingInstance('showing', realtor1)
-  brokerage.addProccessingInstance('offer', realtor1)
 
-  let asObject = brokerage.serialize()
+  team
+    .addProccessingInstance('qualify', realtor1)
+    .addProccessingInstance('accumulateListings', realtor1)
+    .addProccessingInstance('showing', realtor1)
+    .addProccessingInstance('offer', realtor1)
+
+  let snobRealtor = { label: 'e1337' }
+  team
+    .addProccessingInstance('showing', snobRealtor)
+    .addProccessingInstance('offer', snobRealtor)
+
+  let asObject = team.serialize()
   console.log(JSON.stringify(asObject))
   t.end()
 })
