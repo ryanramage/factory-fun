@@ -1,28 +1,48 @@
+const _ = require('lodash')
 const test = require('tape')
 const setup = require('./utils/setup')
 const fifo = require('../lib/queueSortStrategy/fifo')
 
-test('create a realestate team', t => {
+test('test stating,updating, and finishing a step', t => {
   let team = setup.createRealEstateTeam()
-    .addInput(1, 'buyer', 'qualify', {contactId: 'normal1'}, 20000)
-    .addInput(1, 'buyer', 'qualify', {contactId: 'tricky1'}, 10000, [{ amount: 2, unit: 'hours' }])
+  let qualify = team.step('qualify')
 
-  team.startRecipe('qualify', {
+  qualify.addInput(1, 'buyer', {contactId: 'normal1'}, 20000)
+  qualify.addInput(1, 'buyer', {contactId: 'tricky1'}, 10000, [{ amount: 2, unit: 'hours' }])
+
+  qualify.start({
+    started: 30000,
     with: 'e12345',
     inputSortedBy: fifo
   }).then(processingId => {
     t.ok(processingId)
 
-    t.end()
-  }).catch(e => {
-    t.fail(e)
-  })
+    let allStatus = qualify.status()
+    t.ok(allStatus)
 
-  // team.sortInputs('qualify', fifo, err => {
-  //   t.error(err)
-  //   let asObject = team.serialize()
-  //   t.ok(asObject)
-  //   console.log(JSON.stringify(asObject))
-  //   t.end()
-  // })
+    let status = qualify.status(processingId)
+    t.equals(_.get(status, 'effort[0].amount'), 0)
+    t.equals(_.get(status, 'estimate[0].amount'), 30)
+    console.log(status)
+
+    // qualify.addEffort(processingId, 'minutes', 20)
+    // qualify.reviseEstimate(processingId, 'minutes', 45)
+    //
+    // qualify.finish(processingId)
+    t.end()
+  }).catch(e => console.log(e))
+})
+
+test('No available inputs throws error', t => {
+  let team = setup.createRealEstateTeam()
+  team.step('qualify').start({
+    started: 30000,
+    with: 'e12345',
+    inputSortedBy: fifo
+  }).then(processingId => {
+    t.fail()
+  }).catch(e => {
+    t.ok(e)
+    t.end()
+  })
 })
