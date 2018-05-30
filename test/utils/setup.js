@@ -46,15 +46,15 @@ exports.createRealEstateTeam = () => {
 
   let realtor1 = { label: 'e12345' }
   team
-    .addProccessingInstance('qualify', realtor1)
-    .addProccessingInstance('accumulateListings', realtor1)
-    .addProccessingInstance('showing', realtor1)
-    .addProccessingInstance('offer', realtor1)
+    .addProcessingInstance('qualify', realtor1)
+    .addProcessingInstance('accumulateListings', realtor1)
+    .addProcessingInstance('showing', realtor1)
+    .addProcessingInstance('offer', realtor1)
 
   let snobRealtor = { label: 'e1337' }
   team
-    .addProccessingInstance('showing', snobRealtor)
-    .addProccessingInstance('offer', snobRealtor)
+    .addProcessingInstance('showing', snobRealtor)
+    .addProcessingInstance('offer', snobRealtor)
 
   return team
 }

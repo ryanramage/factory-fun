@@ -3,19 +3,19 @@ const setup = require('./utils/setup')
 const fifo = require('../lib/queueSortStrategy/fifo')
 
 test('create a realestate team', t => {
-  let addedTimestamp = new Date().getTime()
-
   let team = setup.createRealEstateTeam()
-    .addInput(1, 'buyer', 'qualify', {contactId: 'normal1'}, addedTimestamp)
-    .addInput(1, 'buyer', 'qualify', {contactId: 'tricky1'}, addedTimestamp - 1000, [{ amount: 2, unit: 'hours' }])
+    .addInput(1, 'buyer', 'qualify', {contactId: 'normal1'}, 20000)
+    .addInput(1, 'buyer', 'qualify', {contactId: 'tricky1'}, 10000, [{ amount: 2, unit: 'hours' }])
 
-  team.startProcessing('qualify', {
+  team.startRecipe('qualify', {
     with: 'e12345',
     inputSortedBy: fifo
-  }, (err, processingID) => {
-    t.error(err)
-    t.ok(processingID)
+  }).then(processingId => {
+    t.ok(processingId)
+
     t.end()
+  }).catch(e => {
+    t.fail(e)
   })
 
   // team.sortInputs('qualify', fifo, err => {
