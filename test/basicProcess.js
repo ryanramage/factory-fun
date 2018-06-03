@@ -23,15 +23,18 @@ test('test stating,updating, and finishing a step', t => {
     let status = qualify.status(processingId)
     t.equals(_.get(status, 'effort[0].amount'), 0)
     t.equals(_.get(status, 'estimate[0].amount'), 30)
-
-
     qualify.addEffort(processingId, 'minutes', 20)
     qualify.reviseEstimate(processingId, 'minutes', 45)
     status = qualify.status(processingId)
     t.equals(_.get(status, 'effort[0].amount'), 20)
     t.equals(_.get(status, 'estimate[0].amount'), 45)
-    //
-    // qualify.finish(processingId)
+
+    let products = qualify.finish(processingId, 40000)
+    console.log(JSON.stringify(products, null, 4))
+    // qualify.finish(processingId, [{
+    //   amount: 1,
+    //   product: 'buyer.qualified'
+    // }])
     t.end()
   }).catch(e => console.log(e))
 })
