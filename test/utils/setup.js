@@ -40,9 +40,9 @@ exports.createRealEstateTeam = () => {
 
   // connect all the Processing Steps together, joining outputs with next stage inputs
   team
-    .connectSteps('qualify', 'accumulateListings', [['buyer.qualified', 'buyer.qualified']])
-    .connectSteps('accumulateListings', 'showing', [['showingTour', 'showingTour']])
-    .connectSteps('showing', 'offer', [['completedShowing', 'completedShowing']])
+    .connectSteps('qualify', 'accumulateListings', 'buyer.qualified')
+    .connectSteps('accumulateListings', 'showing', 'showingTour')
+    .connectSteps('showing', 'offer', 'completedShowing')
 
   let realtor1 = { label: 'e12345' }
   team
