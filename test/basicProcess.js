@@ -31,6 +31,34 @@ test('test stating,updating, and finishing a step', t => {
 
     let products = qualify.finish(processingId, 40000)
     console.log(JSON.stringify(products, null, 4))
+
+    let accumulateListings = team.step('accumulateListings')
+    console.log(accumulateListings.queue[0].queue[0])
+    accumulateListings.start({
+      started: 41000,
+      with: 'e12345',
+      inputSortedBy: fifo
+    }).then(processingId => {
+      let products = accumulateListings.finish(processingId, 42000)
+      t.ok(products)
+      let showing = team.step('showing')
+      showing.start({
+        started: 43000,
+        with: 'e1337'
+      }).then(processingId => {
+        let products = showing.finish(processingId)
+        console.log(products)
+        let offer = team.step('offer')
+        offer.start({
+          started: 43000,
+          with: 'e1337'
+        }).then(processingId => {
+          let products = offer.finish(processingId)
+          console.log(products.endProducts[0])
+        })
+      })
+    })
+
     // qualify.finish(processingId, [{
     //   amount: 1,
     //   product: 'buyer.qualified'
